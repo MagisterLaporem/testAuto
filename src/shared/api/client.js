@@ -7,7 +7,12 @@ const messages = {
 export function readApiError(payload) {
   if (!payload || !Object.hasOwn(payload, 'error')) return null;
   const errors = Array.isArray(payload.error) ? payload.error : [payload.error];
-  return errors.map((error) => messages[String(error).trim()] || String(error || 'Неизвестная ошибка API.')).join(' ');
+  return errors
+    .map(
+      (error) =>
+        messages[String(error).trim()] || String(error || 'Неизвестная ошибка API.'),
+    )
+    .join(' ');
 }
 export async function getJson(path, signal) {
   let response;
@@ -18,9 +23,14 @@ export async function getJson(path, signal) {
     throw new Error('Нет связи с сервером. Проверьте подключение и повторите запрос.');
   }
   let payload;
-  try { payload = await response.json(); } catch { throw new Error('Сервер вернул ответ в неподдерживаемом формате.'); }
+  try {
+    payload = await response.json();
+  } catch {
+    throw new Error('Сервер вернул ответ в неподдерживаемом формате.');
+  }
   const apiError = readApiError(payload);
   if (apiError) throw new Error(apiError);
-  if (!response.ok) throw new Error('Ошибка сервера (' + response.status + '). Попробуйте позже.');
+  if (!response.ok)
+    throw new Error('Ошибка сервера (' + response.status + '). Попробуйте позже.');
   return payload;
 }

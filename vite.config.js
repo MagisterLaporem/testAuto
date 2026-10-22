@@ -11,7 +11,10 @@ export default defineConfig(({ mode }) => {
       proxyTimeout: 15000,
       rewrite: (path) => {
         const input = new URL(path, 'http://localhost').searchParams;
-        const params = new URLSearchParams({ key: FAVORIT_API_KEY || '', number: input.get('number') || '' });
+        const params = new URLSearchParams({
+          key: FAVORIT_API_KEY || '',
+          number: input.get('number') || '',
+        });
         if (input.get('brand')) {
           params.set('brand', input.get('brand'));
           params.set('analogues', 'on');
@@ -23,7 +26,11 @@ export default defineConfig(({ mode }) => {
         server.on('error', (_error, _req, res) => {
           if (res && !res.headersSent) {
             res.writeHead(502, { 'Content-Type': 'application/json; charset=utf-8' });
-            res.end(JSON.stringify({ error: 'Сервис запчастей недоступен. Повторите запрос позже.' }));
+            res.end(
+              JSON.stringify({
+                error: 'Сервис запчастей недоступен. Повторите запрос позже.',
+              }),
+            );
           }
         });
       },

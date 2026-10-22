@@ -1,4 +1,12 @@
-body { background: #f8f9fa; }
-.app-container { max-width: 1100px; }
-.search-input { max-width: 600px; }
-.offers-table { min-width: 680px; }
+body {
+  background: #f8f9fa;
+}
+.app-container {
+  max-width: 1100px;
+}
+.search-input {
+  max-width: 600px;
+}
+.offers-table {
+  min-width: 680px;
+}

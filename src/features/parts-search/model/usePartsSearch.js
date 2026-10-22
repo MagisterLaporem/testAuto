@@ -10,13 +10,22 @@ export function usePartsSearch() {
   useEffect(() => {
     if (query.trim().length < 2) return;
     let request;
-    const timer = setTimeout(() => { request = dispatch(loadBrands(query.trim())); }, 400);
-    return () => { clearTimeout(timer); request?.abort(); };
+    const timer = setTimeout(() => {
+      request = dispatch(loadBrands(query.trim()));
+    }, 400);
+    return () => {
+      clearTimeout(timer);
+      request?.abort();
+    };
   }, [query, brandsRetry, dispatch]);
   useEffect(() => {
     if (!brand) return;
     const request = dispatch(loadOffers({ number: query.trim(), brand }));
     return () => request.abort();
   }, [brand, query, offersRetry, dispatch]);
-  return { ...search, retryBrands: () => retryBrands((value) => value + 1), retryOffers: () => retryOffers((value) => value + 1) };
+  return {
+    ...search,
+    retryBrands: () => retryBrands((value) => value + 1),
+    retryOffers: () => retryOffers((value) => value + 1),
+  };
 }

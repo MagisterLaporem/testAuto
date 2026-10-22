@@ -11,14 +11,21 @@ export function OffersTable({ offers }) {
             <th scope="col">Артикул</th>
             <th scope="col">Склад</th>
             <th scope="col">Остаток</th>
-            <th scope="col" className="text-end">Цена</th>
+            <th scope="col" className="text-end">
+              Цена
+            </th>
           </tr>
         </thead>
         <tbody>
           {offers.map((offer) => (
             <tr key={offer.id}>
               <td>
-                <div className="fw-semibold">{offer.brand} {offer.isAnalogue && <span className="badge text-bg-secondary ms-1">Аналог</span>}</div>
+                <div className="fw-semibold">
+                  {offer.brand}{' '}
+                  {offer.isAnalogue && (
+                    <span className="badge text-bg-secondary ms-1">Аналог</span>
+                  )}
+                </div>
                 <div className="small text-secondary">{offer.name}</div>
               </td>
               <td>{offer.number}</td>

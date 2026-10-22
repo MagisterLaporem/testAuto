@@ -5,7 +5,13 @@ afterEach(() => vi.unstubAllGlobals());
 
 describe('API errors', () => {
   it('handles API errors even with HTTP 200', async () => {
-    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: true, json: async () => ({ error: 'Invalid key client!' }) }));
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockResolvedValue({
+        ok: true,
+        json: async () => ({ error: 'Invalid key client!' }),
+      }),
+    );
     await expect(getJson('/api/parts')).rejects.toThrow('недействителен');
   });
   it('handles connection failures', async () => {
@@ -13,7 +19,15 @@ describe('API errors', () => {
     await expect(getJson('/api/parts')).rejects.toThrow('Нет связи');
   });
   it('handles non-JSON responses', async () => {
-    vi.stubGlobal('fetch', vi.fn().mockResolvedValue({ ok: false, json: async () => { throw new Error('HTML'); } }));
+    vi.stubGlobal(
+      'fetch',
+      vi.fn().mockResolvedValue({
+        ok: false,
+        json: async () => {
+          throw new Error('HTML');
+        },
+      }),
+    );
     await expect(getJson('/api/parts')).rejects.toThrow('неподдерживаемом формате');
   });
 });
