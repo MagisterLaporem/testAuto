@@ -52,7 +52,7 @@ src/
 ## Команды
 
 ```sh
-npm run check    # ESLint, Prettier, тесты и сборка
+npm run check    # ESLint, Prettier и сборка
 npm run preview
 ```
 
@@ -69,3 +69,5 @@ npm run preview
 - `npm run check` — все проверки одной командой.
 
 Prettier: отступ 2 пробела, одинарные кавычки в JavaScript, точки с запятой, ширина строки 90 символов, переносы LF. `.editorconfig` задаёт базовые настройки редактора. `eslint-config-prettier` отключает конфликтующие правила форматирования.
+
+ESLint также автоматически отделяет группы импортов и код после импортов, добавляет пустые строки перед `return`, условиями, циклами, функциями и экспортами, после многострочных блоков и групп объявлений переменных. Последовательные объявления переменных можно оставлять вместе. Правила: `import/order`, `import/newline-after-import`, `@stylistic/padding-line-between-statements`.

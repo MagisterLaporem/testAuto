@@ -1,17 +1,21 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+
 import {
   fetchParts,
   extractBrands,
   extractOffers,
 } from '../../../entities/part/index.js';
+
 export const loadBrands = createAsyncThunk('search/brands', async (number, { signal }) =>
   extractBrands(await fetchParts({ number, signal })),
 );
+
 export const loadOffers = createAsyncThunk(
   'search/offers',
   async ({ number, brand }, { signal }) =>
     extractOffers(await fetchParts({ number, brand, signal })),
 );
+
 const initialState = {
   query: '',
   brand: '',
@@ -24,6 +28,7 @@ const initialState = {
   brandsRequestId: null,
   offersRequestId: null,
 };
+
 const slice = createSlice({
   name: 'search',
   initialState,
@@ -33,6 +38,7 @@ const slice = createSlice({
     },
     brandSelected(state, { payload }) {
       if (state.brand === payload) return;
+
       state.brand = payload;
       state.offers = [];
       state.offersStatus = 'idle';
@@ -50,14 +56,18 @@ const slice = createSlice({
         state[prefix + 'Status'] = 'loading';
         state[prefix + 'Error'] = null;
       });
+
       builder.addCase(thunk.fulfilled, (state, action) => {
         if (state[prefix + 'RequestId'] !== action.meta.requestId) return;
+
         state[value] = action.payload;
         state[prefix + 'Status'] = 'success';
         state[prefix + 'RequestId'] = null;
       });
+
       builder.addCase(thunk.rejected, (state, action) => {
         if (state[prefix + 'RequestId'] !== action.meta.requestId) return;
+
         state[prefix + 'Status'] = action.meta.aborted ? 'idle' : 'error';
         state[prefix + 'Error'] = action.meta.aborted ? null : action.error.message;
         state[prefix + 'RequestId'] = null;
@@ -65,5 +75,7 @@ const slice = createSlice({
     }
   },
 });
+
 export const { queryChanged, brandSelected } = slice.actions;
+
 export const searchReducer = slice.reducer;

@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import { useDispatch } from 'react-redux';
+
 import { OffersTable } from '../../../entities/part/index.js';
 import { Loader, EmptyState, ErrorMessage } from '../../../shared/ui/index.js';
 import { queryChanged, brandSelected } from '../model/searchSlice.js';
